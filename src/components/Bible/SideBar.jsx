@@ -4,7 +4,9 @@ import AlertContext from '../../context/alert/alertContext'
 import Comment from './Comment';
 import Button from '../Button';
 import firebase from '../../firebase';
-import clear from '../../icons/delete.svg';
+import BackspaceOutlinedIcon from '@material-ui/icons/BackspaceOutlined';
+import IconButton from '@material-ui/core/IconButton'
+import { useTransition, animated } from "react-spring";
 
 export default function Sidebar({ darkmode, clearFields, handleChange, state, toggleEdit }) {
     const applicationContext = useContext(ApplicationContext)
@@ -39,7 +41,17 @@ export default function Sidebar({ darkmode, clearFields, handleChange, state, to
         setAlert("THis is a warning", "alert")
     }
     }
-
+   
+    const transitions = useTransition(userComments, item => item.id, {
+        enter: { opacity: 1, maxHeight: '500px', overflow: 'hidden'},
+        leave: item => async (next, cancel) => {
+            await next({opacity: 0, overflow: 'hidden'})
+            await next({maxHeight: '0px', overflow: 'hidden'})
+          },
+        from: {opacity: 0, maxHeight: '0px', overflow: 'hidden'}
+        })
+    
+    
     
 
     return (
@@ -49,10 +61,10 @@ export default function Sidebar({ darkmode, clearFields, handleChange, state, to
             
             <div className="sidebarmain">
             <h2 className ='h5 mbottom'>Add your own comment:</h2>
-            <form onSubmit = {onSubmit} className="addComment">
-            <Button className = 'clear-button right' type="button" onPress ={clearFields}>
-                <img className= {darkmode? '': 'filter-svg'} src={clear} alt="clear"/>
-            </Button>
+            <form onSubmit = {onSubmit} className="addComment relative">
+            <IconButton className = 'clear-button right' aria-label ='clear commentary area' type="button" onClick ={clearFields}>
+                <BackspaceOutlinedIcon />
+            </IconButton>
             <div class="form__group field">
                 <input type="number" class="highlight form__field" value = {verse} onChange = { handleChange } placeholder="verse number" name="verse"  required />
                 <label htmlFor="name" class="form__label">Verse Number:</label>
@@ -69,7 +81,8 @@ export default function Sidebar({ darkmode, clearFields, handleChange, state, to
             <div className="edit-container">
                 <h3 className ='h5 mbottom'>Your Comments:</h3>
                 {userComments.length > 0 && <Button onPress={toggleEdit} className= "absolute-right" type="submit" >edit</Button>}
-                {userComments && userComments.map((item)=><Comment edit ={edit} id ={item.id} deleteComment ={deleteComment} currentVerse = {verse} photoURL = {item.photoURL} verse= {item.verse} user = {item.handle} date = {item.post_date} text = {item.text} />)}
+                {transitions && transitions.map(({ item, props, key }) =><animated.div key={key} style={props}><Comment edit ={edit} id ={item.id} deleteComment ={deleteComment} currentVerse = {verse} photoURL = {item.photoURL} verse= {item.verse} user = {item.handle} date = {item.post_date} text = {item.text} /></animated.div>)}
+                
             </div>
             <h3 className = 'h5 mbottom'>Other's Comments:</h3>
             {comments && comments.map((item)=><Comment photoURL = {item.photoURL} verse= {item.verse} user = {item.handle} date = {item.post_date} text = {item.text} />)}

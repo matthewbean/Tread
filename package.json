@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.8.3",
@@ -15,7 +17,7 @@
     "react-firebaseui": "^4.1.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
-    "rsuite": "^4.9.3",
+    "react-spring": "^8.0.5",
     "simplebar": "^5.3.0",
     "uuid": "^8.3.2",
     "web-vitals": "^1.1.1"
@@ -46,7 +48,6 @@
   },
   "devDependencies": {
     "css-loader": "^5.2.1",
-    "less": "^4.1.1",
     "less-loader": "^8.1.0",
     "style-loader": "^2.0.0"
   }

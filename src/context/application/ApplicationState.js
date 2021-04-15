@@ -102,7 +102,7 @@ const initialState = {
         comments: [],
         userComments: [],
         user: 'unknown',
-        loading: true,
+        loading: false,
         loggedIn: "unknown",
         follows: null,
         VIP: null

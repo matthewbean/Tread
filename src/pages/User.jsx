@@ -11,6 +11,7 @@ import unfollow from '../icons/user-minus.svg';
 import Vip from '../components/VIP';
 import SettingsContext from '../context/settings/settingsContext';
 import Loading from '../components/routing/Loading';
+import Dashboard from '../components/Dashboard';
 
 
 
@@ -119,7 +120,8 @@ export default function User({ match }) {
     }
     return (
         <div className="homepage"> 
-        <div className="dashboard">
+        <Dashboard alwaysHide/>
+        <div className="dashboard dashboard-other">
             {userDetails &&<div className="profile">
                 <h1 className="h4">{userDetails.name}</h1>
                 <img className = "profilepicture" src={userDetails.photoURL} alt=""/>
@@ -130,8 +132,9 @@ export default function User({ match }) {
         </Button>):(<Button className = {'h4 clear-button home-link user-link ' + (!settings.darkmode?'filter-button':'')} type="button" onPress ={addFollow}>
                  <img className = {settings.darkmode? '': 'filter-svg'} src={follow} alt=""/> Follow
              </Button>)}
-                <h2 className="h3">VIPs</h2>
+                
                 <section className="VIP-section">
+                <h2 className="h3">Favorites:</h2>
                     {userDetails && userDetails.VIP.map((item)=> <Vip name = {item.name} photoURL = {item.photoURL} UUID = {item.id} />)}                    
                 </section>
             

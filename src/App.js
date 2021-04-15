@@ -11,6 +11,7 @@ import Search from './pages/Search';
 import Bookmarks from './pages/Bookmarks';
 import User from './pages/User';
 import Settings from './pages/Settings';
+import About from './pages/About'
 
 import Loader from './components/Loader';
 import Toolbar from './components/routing/Toolbar';
@@ -22,6 +23,7 @@ import Alerts from './components/alerts/Alerts';
 import ApplicationState from './context/application/ApplicationState';
 import SettingsState from './context/settings/SettingsState';
 import AlertState from './context/alert/AlertState';
+import Test from './components/Bible/Test';
 
 
 
@@ -30,10 +32,6 @@ import AlertState from './context/alert/AlertState';
 
 
 function App() {
-
-
-  
-
 
 
   return (
@@ -50,6 +48,8 @@ function App() {
       <Switch>
         <PrivateRoute exact path = '/' component = {() => <Home />}/>
         <Route exact path = '/signin' component = {SignIn} />
+        <Route exact path = '/about' component = {About} />
+        <Route exact path = '/test' component = {Test} />
         <PrivateRoute exact path = '/bible' component = {Bible} />
         <PrivateRoute exact path = '/follows' component = {Follows} />
         <PrivateRoute exact path = '/bookmarks' component = {Bookmarks} />

@@ -6,12 +6,20 @@ import Button from '../components/Button'
 import firebase from '../firebase'
 import AlertContext from '../context/alert/alertContext';
 
-import arrowright from '../icons/arrow-right.svg';
-import arrowleft from '../icons/arrow-left.svg';
-import bookmark from '../icons/bookmark.svg';
-import bookmarkfilled from '../icons/bookmark-filled.svg';
+import Drawer from '@material-ui/core/Drawer';
+import Hidden from '@material-ui/core/Hidden'
+
+import IconButton from '@material-ui/core/IconButton'
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
+import BookmarkIcon from '@material-ui/icons/Bookmark';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
+import NoteIcon from '@material-ui/icons/Note';
+
 import SettingsContext from '../context/settings/settingsContext';
 import Loading from '../components/routing/Loading';
+import Dashboard from '../components/Dashboard';
 
 export default function Bible(props) {
     const applicationContext = useContext(ApplicationContext);
@@ -20,6 +28,17 @@ export default function Bible(props) {
     const { setAlert, clearAlerts } = alertContext;
         const settingsContext = useContext(SettingsContext)
     const{ settings } = settingsContext;
+
+
+    const [drawerState, setDrawerState] = useState(false)
+
+    const toggleDrawer = () => (event) => {
+      if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+        return;
+      }
+  
+      setDrawerState(!drawerState);
+    };
 
     const [bookmarkState, setBookmarkState] = useState(false)
 
@@ -39,7 +58,6 @@ export default function Bible(props) {
                     // doc.data() is never undefined for query doc snapshots
                     let item = doc.data()
                     item.id = doc.id
-                    console.log( item)
                     comments.push(item);
                 })
                 loadUserComments(comments)
@@ -53,9 +71,10 @@ export default function Bible(props) {
   
         
     const getComments = () =>{
+        
         const VIPs = user.VIP.map((item)=> item.id)
-        console.log( VIPs)
-        const unsubscribe = db.collection("comments")
+        if (VIPs > 0) {
+            const unsubscribe = db.collection("comments")
             .where("book", "==", BibleData.verses[0].book_name)
             .where("chapter", "==", BibleData.verses[0].chapter)
             .where("UUID", "in", VIPs)
@@ -78,6 +97,8 @@ export default function Bible(props) {
             })
             
             return unsubscribe
+        }
+        
         }
     const getBookmarks = () =>{
         const unsubscribe = 
@@ -129,7 +150,10 @@ export default function Bible(props) {
         let UnsubscribeUser = getUserComments()
         let UnsubscribeBookmarks = getBookmarks()
         return () =>{
-            Unsubscribe();
+            if (Unsubscribe) {
+                Unsubscribe();   
+            }
+            
             UnsubscribeUser();
             UnsubscribeBookmarks();
         }
@@ -183,29 +207,35 @@ export default function Bible(props) {
     }
 
     return (
+        <>
+        <Dashboard alwaysHide/>
     
-        BibleData? 
+        {BibleData? 
         (
         <>
-        <Button onPress ={clearBibleData}>Chapter Select</Button>
+        <div className="Biblenav">
+        <IconButton onClick ={clearBibleData} aria-label ='Return to Chapter Select'><MenuBookIcon fontSize ='large' /></IconButton>
         {bookmarkState?
-             <Button className = 'clear-button right' type="button" onPress ={deleteBookmark}>
-                <img className={settings.darkmode? '': 'filter-svg'} src={bookmarkfilled} alt="remove bookmark"/>
-             </Button> :
-            <Button className = 'clear-button right' type="button" onPress ={addBookmark}>
-                <img className={settings.darkmode? '': 'filter-svg'} src={bookmark} alt="add bookmark"/>
-            </Button>}
+
+            <IconButton onClick ={deleteBookmark} className = 'clear-button' aria-label="remove bookmark" ><BookmarkIcon fontSize ='large'/></IconButton>
+    :
+            <IconButton onClick ={addBookmark} className = 'clear-button' aria-label="bookmark chapter" ><BookmarkBorderIcon fontSize ='large'/></IconButton>
+        }
+        <Hidden mdUp>
+                <IconButton  onClick={toggleDrawer()}><NoteIcon fontSize ='large'/></IconButton>
+        </Hidden>
+        </div>
         <div className="Biblereader">
             <div className="Biblemain">
                 <h1 className = 'mbottom h3 Bibletitle'>
                     <div>
-                {BibleData.reference !="Genesis 1" && <button onClick ={handlePreviousClick}><img className={settings.darkmode? '': 'filter-svg'} src = {arrowleft} alt = "previous chapter "/></button>}
+                {BibleData.reference !="Genesis 1" && <IconButton aria-label="Go to Previous Chapter" onClick ={handlePreviousClick}><ArrowBackIosIcon /></IconButton>}
                 </div>
                 <div className="reference">
                 {BibleData.reference}
                 </div>
                 <div>
-                {BibleData.reference !="Revelation 22" && <button onClick ={handleNextClick}><img className={settings.darkmode? '': 'filter-svg'} src = {arrowright} alt = "next chapter "/></button>}
+                {BibleData.reference !="Revelation 22" && <IconButton aria-label="Go to Next Chapter" onClick ={handleNextClick}><ArrowForwardIosIcon>Go to next chapter</ArrowForwardIosIcon></IconButton>}
                 </div>
                 </h1>
                 <div className="reader">
@@ -213,13 +243,21 @@ export default function Bible(props) {
                 </div>
                 <small>{BibleData.translation_name}</small>
                 </div>
-            
-            <Sidebar darkmode ={settings.darkmode} toggleEdit ={toggleEdit} edit= {commentState.edit} clearFields = {clearFields} handleChange = {handleChange} state = {commentState}/>
+                
+                <Hidden mdUp>
+
+        <Drawer anchor='right' open={drawerState} onClose={toggleDrawer()}>
+            <Sidebar  darkmode ={settings.darkmode} toggleEdit ={toggleEdit} edit= {commentState.edit} clearFields = {clearFields} handleChange = {handleChange} state = {commentState}/>
+        </Drawer>
+        </Hidden>
+        <Hidden smDown>
+        <Sidebar  darkmode ={settings.darkmode} toggleEdit ={toggleEdit} edit= {commentState.edit} clearFields = {clearFields} handleChange = {handleChange} state = {commentState}/>
+        </Hidden>
         </div>
         </>
         ):
-        (<Select />)
-        
+        (<Select />)}
+        </>
         
     )   
 }
