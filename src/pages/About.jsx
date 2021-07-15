@@ -1,12 +1,124 @@
 import React from 'react'
+import { Link }  from 'react-router-dom';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 
 
+import profile from '../Images/profile.svg';
+import friends from '../Images/find-friends.svg';
+import favorites from '../Images/favorites.svg';
+import social from '../Images/social-network.svg';
 export default function About(props) {
  return(
-      <div>
-        <p>If the years 2020 through 2021 have taught us anything, it is that being together is never guaranteed. our preconceived habits and routines were challenged through the global pandemic. One way in which this was perceived by many was the inability to go to church. This brought to light the need for a way to commune with other believers without being face to face. For most of us, this meant turning to services like zoom in order to have the communication that we needed. While this worked or meetings and online streaming took care of preaching, there was no great way to interact with the Bible in a communal way.</p>
-        <p>Enter the Bible app. A brand-new way to experience the Bible.  interact with friends in real time by commenting and adding your insight too impactful verses. Follow your friends, pastors, or influential Christians. get their take on the verses that you have read before. Reply to them and start a conversation. </p>
-        <p>This is the purpose of the Bible app, to bring together the community of believers at large and allow them to have a medium to experience God's word. Join today and see how God can work in your life through his word. </p>
-      </div>
+<>  
+      
+      <main className = 'about-main'>
+        
+      <div className="hero">
+          <Container>
+        <Grid container spacing={3}>
+
+        <Grid item xs={12}>
+        <h2>Welcome to Bible With Friends</h2>
+        <p>Bible With Friends is a brand-new social media platform that allows you to network with fellow believers across the world.
+          Experience the word in a new way, together. Get started in four easy steps.
+        </p>
+        </Grid>
+
+        </Grid>
+        </Container>
+        </div>
+
+
+        <section className = 'first-section'>
+          <Container>
+        <Grid container spacing={3}>
+
+        <Grid item xs={7}>
+        <h2>Step one: Create a Profile</h2>
+        <p>
+          Get started on our homepage I sang in with either your email or through Google. After signing up you will be prompted to pick a profile icon or given the option to use your existing Google photo.
+        </p>
+        </Grid>
+        <Grid item xs={5}>
+        <img src={profile} className = 'backgroundimg img-right' alt="" />
+        
+        </Grid>
+
+        </Grid>
+        </Container>
+        
+
+
+          <Container>
+        <Grid container spacing={3}>
+
+        <Grid item xs={5}>
+        <img src={friends} className = 'backgroundimg img-left' alt="" />
+        
+        </Grid>
+        <Grid item xs={7}>
+        <h2>Step two: Find your Friends</h2>
+        <p>Use our search tool or ask your friend to send you a direct through their profile link. Upon visiting their profile, you can use The follow button to add them to your follows list.</p>
+        </Grid>
+      
+        </Grid>
+        </Container>
+        </section>
+          <section className = 'second-section'>
+          <Container>
+        <Grid container spacing={3}>
+        
+        <Grid item xs={7}>
+        <h2>Step three: Create a Favorites List</h2>
+        <p>
+          The favorites list is a group of people that will be shown when you are readiing the Bible. You can edit this list at any time in order to see what your friends have to say.
+        </p>
+        </Grid>
+        <Grid item xs={5}>
+        <img src={favorites} className = 'backgroundimg img-right' alt="" />
+        
+        </Grid>
+        </Grid>
+        </Container>
+        
+        <Container>
+        <Grid container spacing={3}>
+        <Grid item xs={5}>
+        <img src={social} className = 'backgroundimg img-left' alt="" />
+        
+        </Grid>
+        <Grid item xs={7}>
+        <h2>Step four: Read and Comment</h2>
+        <p>
+          Click the Bible tab to begin reading the word. While reading you can leave comments on the side pertaining to certain verses. People who follow you will see these comments and they are able to respond.
+        </p>
+        </Grid>
+    
+        </Grid>
+        </Container>
+        </section>
+        
+      
+        
+        
+        
+
+      </main>
+      <footer>
+      <Container>
+        <div>
+        BiblewithFriends&copy;
+        </div>
+        <div>
+          <ul>
+            <li><Link to='/'>Login</Link></li>
+            <li><Link to='/about'>About</Link></li>
+          </ul>
+        </div>
+      </Container>        
+      </footer>        
+      
+      </>
     );
 }

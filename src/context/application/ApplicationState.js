@@ -137,6 +137,7 @@ const initialState = {
     try{
         db.collection("comments")
         .where('UUID', '==', id)
+        .orderBy("post_date", "desc")
         .limit('20')
         .get()
         .then((querySnapshot) => {
@@ -178,6 +179,7 @@ const initialState = {
             handle: displayName, 
             UUID:uid, 
             photoURL: photoURL,
+            recent_replies: [],
             post_date: firebase.firestore.FieldValue.serverTimestamp()
         })
         .catch((error) => {

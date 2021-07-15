@@ -1,5 +1,5 @@
 :root {
-  --main: #1BA098;
+  --main: rgb(63, 81, 181);
   --toolbar: var(--secondary);
   --secondary: #12151F;
   --warning: rgb(255, 59, 45);
@@ -14,10 +14,7 @@
   --scroll-bar: #444;
   --scroll-track: #727272;
 }
-.filter-svg{
-  filter: brightness(.2);
-  
-}
+
 .filter-button{
   color: black;
 }
@@ -81,18 +78,26 @@ h5 {font-size: 1.25rem;}
 small, .text-small {font-size: 0.8rem;}
 
 
-button {
+button, .button {
   position: relative;
   overflow: hidden;
   transition: background 400ms;
   font-size: 1rem;
+  text-transform: capitalize;
   outline: 0;
   border: 0;
   cursor: pointer;
   color: #fff;
   background-color: var(--main);
   padding: .625rem;
-  border: 1px solid var(--outline);
+  border: none;
+  border-radius: 5px;
+
+}
+
+.MuiButton-root span{
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
 }
 
 span.ripple {
@@ -130,9 +135,13 @@ span.ripple {
   background-color: var(--scroll-bar);
 }
 .App{
-  margin: 60px 20px 0 20px ;
+  margin-top: 60px
 }
-
+.justify-left{
+  margin: 0;
+  margin-right: auto;
+  
+}
 nav{
   background: var(--toolbar);
   padding: 10px;
@@ -142,14 +151,25 @@ nav{
   top: 0px;
   left: 0px;
   border-bottom: 1px solid var(--outline);
+}
+nav .logo{
+  height: 30px;
 
 }
 nav form{
   display: flex;
-  background-color: rgb(232, 240, 254);
+  margin-left: 2rem;
   border: 1px solid var(--outline);
+  
+}
+
+.search{
+  flex: 0 1 17rem;
+
+
 }
 nav input{
+  width: 100%;
   background-color: rgb(232, 240, 254);
   padding: 0rem;
   color: #000;
@@ -168,12 +188,15 @@ border-left: 1px solid var(--outline);
 nav button svg{
   fill: #444 !important;
 }
-
+nav .link .MuiIconButton-root{
+ height: 23px;
+}
 
 nav ul{
   display: flex;
   justify-content: flex-end;
   align-content: center;
+  align-items: center;
   width: 100%;
 
 }
@@ -184,7 +207,12 @@ nav ul li{
 }
 nav ul li a{
   color: #fff;
+  
   text-decoration: none;
+}
+nav ul li a svg{
+  fill: #fff !important;
+
 }
 .sign-in{
  text-align: center;
@@ -344,7 +372,8 @@ height: 2.25rem;
   margin: 0;
   flex: none;
   height: 100vh;
-  background: var(--secondary);
+  background: var(--background);
+  border-left: 1px solid var(--outline);
 }
 .MuiDrawer-paper .sidebarmain{
 height: calc(100vh - 64px);
@@ -370,44 +399,103 @@ border: none;
 
 
 .comment{
-  
-  border: 1px solid var(--outline);
-  border-left: var(--main) 5px solid;
-  background: var(--card-color);
+
   width: 100%;
-  min-height: 100px;
-  margin: .5rem 0;
+  
+  
   padding: .5rem;
   display: grid;
   grid-gap: .5rem;
   grid-template-columns: 40px 1fr 1fr 1fr 2rem 2rem;
-  grid-template-rows: 15px 40px 1fr 15px;
+  grid-template-rows: 15px auto 25px;
   grid-template-areas: 
-    "photo user user user user edit"
-    "photo comment comment comment comment ." 
-    ". comment comment comment comment ." 
-    "verse verse verse verse date date";
+    "photo user user user date date"
+    "photo comment comment comment comment edit" 
+    
+    " icons icons . .verse verse";
+}
+.reply{
+  
+  
+  grid-template-columns: 40px 1fr 1fr 1fr 2rem 2rem;
+  grid-template-rows: 15px auto auto;
+  grid-template-areas: 
+    "photo user user user date date "
+    "photo  comment comment comment comment edit" 
+    
+    "icons icons icons . . .";
 }
 .feed-comment{
   grid-template-columns: 40px 1fr 1fr 1fr 4rem;
   grid-template-rows: 15px auto auto  15px;
   grid-template-areas: 
-    "photo user user user user"
+    "photo user user date date"
     "photo  passage passage passage passage" 
     ". comment comment comment comment" 
-    "verse verse verse verse date";
+    "verse verse verse verse .";
 }
 .bookmark{
   grid-template-columns: 40px 1fr 1fr 1fr 4rem;
   grid-template-rows: 15px auto 15px;
   grid-template-areas: 
-    ". . . . edit"
-    "photo  verse verse verse verse"
-    ". . . . date";
+    ". . . . date"
+    "photo  verse verse verse edit"
+    ". . . . .";
+}
+.comment-replies{
+  margin: .5rem 0;
+  border: 1px solid var(--outline);
+  
+  
+  border-left: var(--main) 5px solid;
+  background: var(--card-color);
+}
+
+.comment-replies-home{
+  margin: 1rem 1rem;
+}
+.replies{
+  border-top: 1px solid var(--outline);
+  width: 100%;
+}
+.reply{
+  border-bottom: 1px solid var(--outline);
+  padding-left: .5rem;
+}
+
+.comment-replies-home .reply{
+  padding-left: calc(1rem + 40px);
+}
+.comment-replies-home .reply:last-child{
+  border-bottom: none;
+}
+.reply-field{
+  display: flex;
+  border-top: 1px solid var(--outline) ;
+  margin: 0 !important;
+  
+  padding: .5rem;
+  
+
+  
+}
+.reply-field .replyText{
+  margin: 0;
+  padding: 0;
+  height: 4rem;
+  color: var(--text);
+  font-family: 'Poppins', sans-serif;
+  
+  font-size: 1rem;
+
+}
+.replyText{
+  outline: none;
 }
 
 .comment .text-active{
   color: var(--highlight-text);
+  
 }
 .comment .user{
   grid-area: user;
@@ -421,9 +509,21 @@ border: none;
 .comment .photo{
   grid-area: photo;
 }
+.bookmark-photo{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
 .comment .photo img {
 width: 100%;
 } 
+.comment .comment-icons{
+  grid-area: icons;
+}
+.comment .comment-icons button{
+  padding: 0;
+}
 
 .comment .date{
   grid-area: date;
@@ -431,7 +531,11 @@ width: 100%;
 }
 .comment .verse{
   grid-area: verse;
-  
+  text-align: right;
+
+}
+.bookmark .verse{
+  text-align: left;
 }
 .comment .passage{
   grid-area: passage;
@@ -688,17 +792,17 @@ height: 150px;
 }
 .submission{
   display: flex;
-  
+  justify-content: flex-end;
 
 }
 .submit{
   width: 100%;
   background-color: var(--main);
-  border: 1px solid var(--outline);
-  padding: .625rem;
+  
+  
   color: #fff;
   text-align: center;
-  flex: 0 0 30%;
+  flex: 0 0 7rem;
 }
 .fab{
   border-radius: 50%;
@@ -775,6 +879,7 @@ top: 0;
 }
 .inline{
   display: inline;
+  border-radius: 0;
 }
 .mtop{
   margin-top: 1.38rem;
@@ -796,6 +901,77 @@ top: 0;
   left: 0;
   z-index: 2;
 }
+.top-left svg{
+  
+  fill: white
+}
+.noborder{
+  border: none;
+}
+
+/* about page */
+.about-main .hero{
+  margin-top: -.5rem;
+  height: 25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--main);
+  color: #fff;
+}
+.about-main .hero h2, .about-main .hero p{
+  color: #fff;
+} 
+
+.first-section .MuiContainer-root:last-child{
+    margin-bottom: -9rem;
+}
+.first-section .MuiContainer-root:first-child{
+  margin-bottom: 12rem;
+  margin-top: 7rem;
+}
+.second-section .MuiContainer-root:first-child{
+  margin-bottom: 11rem;
+}
+footer{
+  background: var(--main);
+  padding: .5rem 0;
+  margin: auto 0 0 0;
+}
+footer ul{
+  list-style: none;
+}
+footer .MuiContainer-root{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+
+}
+
+
+.backgroundimg{
+width: 90%;
+
+position: relative;
+}
+.first-section .img-left{
+  left: 20px;
+  top: -250px;
+}
+.first-section .img-right{
+  left: -20px;
+  top: 125px;
+}
+.second-section .img-left{
+  left: 20px;
+  top: -175px;
+}
+.second-section .img-right{
+  left: -20px;
+  top: 100px;
+}
+
 
 
 @media screen and (max-width: 1200px) {
@@ -810,7 +986,7 @@ top: 0;
     padding-left: 0px;
   }
 }
-@media screen and (max-width: 960px) {
+@media screen and (max-width: 959px) {
   .Biblemain{
     margin-right: 0;
   }
@@ -821,6 +997,7 @@ top: 0;
   }
   .feed-comment{
     width:100%;
+    
   }
   .dashboard-other{
     position: static;

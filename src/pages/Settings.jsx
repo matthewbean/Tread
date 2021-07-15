@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom'
 import firebase from '../firebase'
 import SettingsContext from '../context/settings/settingsContext';
 import Dashboard from '../components/Dashboard';
-
+import Button from '@material-ui/core/Button';
 
 
 export default function Settings(props) {
@@ -51,15 +51,23 @@ export default function Settings(props) {
                     <option value="verdana">Verdana</option>
                     <option value="monospace">Monospace</option>
                 </select>
-
+                </div>
+                <label htmlFor="fontSize">Font Size: </label>
                     <input type="range" min="16" max="50" id="myRange" name ='fontsize' value ={state.fontsize} onChange={(e)=>onChange(e)}></input>
                 
                 <div style = {{fontSize: `${state.fontsize}px`}} className="font-preview"> 
                 <p className={state.font}>In the beginning, God created the heavens and the earth.</p></div>
-                </div>
+                
                 <div className="submission">
-                <Link to = '/' className="h4 warning submit">Cancel</Link>
-                <button type="submit" className="h4 submit">Submit</button>
+                <Button className ='warning h4' variant="contained" color='secondary' component={Link} to={'/'}>
+                    Cancel
+                </Button>
+                <Button type="submit" variant="contained" color="primary">
+                    Submit
+                </Button>
+
+
+                
                 </div>
                 </form>
             </section>

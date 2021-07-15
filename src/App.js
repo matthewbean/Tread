@@ -31,8 +31,9 @@ import Test from './components/Bible/Test';
 
 
 
-function App() {
 
+function App() {
+console.log(Route)
 
   return (
     

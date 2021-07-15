@@ -38,12 +38,12 @@ export default function Sidebar({ darkmode, clearFields, handleChange, state, to
         submitComment(BibleData.translation_id, BibleData.verses[verse-1].text, comment, BibleData.verses[0].book_name, BibleData.verses[0].chapter, verse, displayName, uid, photoURL)
         clearFields()
     }else{
-        setAlert("THis is a warning", "alert")
+        setAlert("This is a warning", "alert")
     }
     }
    
     const transitions = useTransition(userComments, item => item.id, {
-        enter: { opacity: 1, maxHeight: '500px', overflow: 'hidden'},
+        enter: { opacity: 1, maxHeight: '3000px', overflow: 'hidden'},
         leave: item => async (next, cancel) => {
             await next({opacity: 0, overflow: 'hidden'})
             await next({maxHeight: '0px', overflow: 'hidden'})
@@ -81,11 +81,10 @@ export default function Sidebar({ darkmode, clearFields, handleChange, state, to
             <div className="edit-container">
                 <h3 className ='h5 mbottom'>Your Comments:</h3>
                 {userComments.length > 0 && <Button onPress={toggleEdit} className= "absolute-right" type="submit" >edit</Button>}
-                {transitions && transitions.map(({ item, props, key }) =><animated.div key={key} style={props}><Comment edit ={edit} id ={item.id} deleteComment ={deleteComment} currentVerse = {verse} photoURL = {item.photoURL} verse= {item.verse} user = {item.handle} date = {item.post_date} text = {item.text} /></animated.div>)}
-                
+                {transitions && transitions.map(({ item, props, key }) =><animated.div key={key} style={props}><Comment recentReplies = {item.recent_replies} currentUser ={auth.currentUser} owned ={true} edit ={edit} id ={item.id} deleteComment ={deleteComment} replies ={item.replies} currentVerse = {verse} photoURL = {item.photoURL} verse= {item.verse} user = {item.handle} date = {item.post_date} text = {item.text} /></animated.div>)}
             </div>
             <h3 className = 'h5 mbottom'>Other's Comments:</h3>
-            {comments && comments.map((item)=><Comment photoURL = {item.photoURL} verse= {item.verse} user = {item.handle} date = {item.post_date} text = {item.text} />)}
+            {comments && comments.map((item)=><Comment id = {item.id} recentReplies = {item.recent_replies} owned ={false} photoURL = {item.photoURL} currentUser ={auth.currentUser} verse= {item.verse} user = {item.handle} date = {item.post_date} text = {item.text} />)}
             </div>
         </div>
     )

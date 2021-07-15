@@ -10,7 +10,8 @@ import firebase from '../firebase';
 import HomeIcon from '@material-ui/icons/Home';
 import PeopleIcon from '@material-ui/icons/People';
 import BookIcon from '@material-ui/icons/Book';
-import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
+import BookmarksIcon from '@material-ui/icons/Bookmarks';
+
 import TuneIcon from '@material-ui/icons/Tune';
 
 import Vip from '../components/VIP';
@@ -57,7 +58,7 @@ export default function Dashboard({ alwaysHide }) {
                         <li><Link className = "home-link" to = "/"><HomeIcon /><h4>Home</h4></Link></li>
                         <li><Link className = "home-link" to = "/follows"><PeopleIcon /><h4>Follows</h4></Link></li>
                         <li><Link className = "home-link" to = "/bible"><BookIcon /><h4>Bible</h4></Link></li>
-                        <li><Link className = "home-link" to = "/bookmarks"><BookmarkBorderIcon /><h4>Bookmarks</h4></Link></li>
+                        <li><Link className = "home-link" to = "/bookmarks"><BookmarksIcon /><h4>Bookmarks</h4></Link></li>
                         <li><Link className = "home-link" to = "/settings"><TuneIcon /><h4>Settings</h4></Link></li>
                     </ul>
                     <h2 className="h4 mtop">Favorites:</h2>
@@ -84,12 +85,12 @@ export default function Dashboard({ alwaysHide }) {
                         <li><Link className = "home-link" to = "/"><HomeIcon /><h4>Home</h4></Link></li>
                         <li><Link className = "home-link" to = "/follows"><PeopleIcon /><h4>Follows</h4></Link></li>
                         <li><Link className = "home-link" to = "/bible"><BookIcon /><h4>Bible</h4></Link></li>
-                        <li><Link className = "home-link" to = "/bookmarks"><BookmarkBorderIcon /><h4>Bookmarks</h4></Link></li>
+                        <li><Link className = "home-link" to = "/bookmarks"><BookmarksIcon /><h4>Bookmarks</h4></Link></li>
                         <li><Link className = "home-link" to = "/settings"><TuneIcon /><h4>Settings</h4></Link></li>
                     </ul>
                     <h2 className="h4 mtop">Favorites:</h2>
                     <section className="VIP-section">
-                        {user.VIP.map((item)=> <Vip name = {item.name} photoURL = {item.photoURL} UUID = {item.id} />)}                    
+                    {user && user.VIP && user.VIP.map((item)=> <Vip name = {item.name} photoURL = {item.photoURL} UUID = {item.id} />)}                    
                     </section>
                 
             </div>
@@ -105,7 +106,7 @@ export default function Dashboard({ alwaysHide }) {
                         <li><Link className = "home-link" to = "/"><HomeIcon /><h4>Home</h4></Link></li>
                         <li><Link className = "home-link" to = "/follows"><PeopleIcon /><h4>Follows</h4></Link></li>
                         <li><Link className = "home-link" to = "/bible"><BookIcon /><h4>Bible</h4></Link></li>
-                        <li><Link className = "home-link" to = "/bookmarks"><BookmarkBorderIcon /><h4>Bookmarks</h4></Link></li>
+                        <li><Link className = "home-link" to = "/bookmarks"><BookmarksIcon /><h4>Bookmarks</h4></Link></li>
                         <li><Link className = "home-link" to = "/settings"><TuneIcon /><h4>Settings</h4></Link></li>
                     </ul>
                     <h2 className="h4 mtop">Favorites:</h2>

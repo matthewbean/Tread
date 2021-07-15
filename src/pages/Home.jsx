@@ -34,7 +34,7 @@ export default function Home() {
            <Dashboard />
                 {feed &&
                 <section className="main">
-                    {feed && feed.map((item)=><FeedComment translation ={item.translation} chapter ={item.chapter} photoURL = {item.photoURL} book = {item.book} passage ={item.passage} verse= {item.verse} user = {item.handle} date = {item.post_date} text = {item.text} />)}
+                    {feed && feed.map((item)=><FeedComment replies = {item.recent_replies} translation ={item.translation} chapter ={item.chapter} photoURL = {item.photoURL} book = {item.book} passage ={item.passage} verse= {item.verse} user = {item.handle} date = {item.post_date} text = {item.text} />)}
                 </section>}
         </div>
         
