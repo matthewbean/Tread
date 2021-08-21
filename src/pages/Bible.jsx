@@ -24,9 +24,9 @@ import Dashboard from '../components/Dashboard';
 
 export default function Bible(props) {
     const applicationContext = useContext(ApplicationContext);
-    const { loading, setLoading, user, clearBibleData, loadUserComments, books, BibleData, currentBook, currentChapter, loadChapter, selectBook, selectChapter, loadComments} = applicationContext; 
+    const { loading, user, clearBibleData, loadUserComments, books, BibleData, currentBook, currentChapter, loadChapter, selectBook, selectChapter, loadComments} = applicationContext; 
     const alertContext = useContext(AlertContext)
-    const { setAlert, clearAlerts } = alertContext;
+    const { setAlert } = alertContext;
         const settingsContext = useContext(SettingsContext)
     const{ settings } = settingsContext;
 
@@ -34,7 +34,6 @@ export default function Bible(props) {
     const [drawerState, setDrawerState] = useState(false)
 
     const toggleDrawer = (event) => {
-        // console.log(event)
       if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
         return;
       }
@@ -47,80 +46,7 @@ export default function Bible(props) {
 
     let db = firebase.firestore();
     const auth = firebase.auth()
-    const getUserComments = () =>{
-        const unsubscribe = db.collection("comments")
-            .where("book", "==", BibleData.verses[0].book_name)
-            .where("chapter", "==", BibleData.verses[0].chapter)
-            .where("UUID", "==", auth.currentUser.uid)
-            .orderBy("verse")
-            .orderBy("post_date", "desc")
-            .limit(100)
-            .onSnapshot((querySnapshot) => {
-                let comments = []
-                querySnapshot.forEach((doc) => {
-                    // doc.data() is never undefined for query doc snapshots
-                    let item = doc.data()
-                    item.id = doc.id
-                    comments.push(item);
-                })
-                loadUserComments(comments)
-            }, (error) => {
-                console.log(error)
-                setAlert("An error has occurred, please try reloading the page.")
-            })
-            
-            return unsubscribe
-        }
-  
-        
-    const getComments = () =>{
-        
-        const VIPs = user.VIP.map((item)=> item.id)
-        
-        if (VIPs.length > 0) {
-            const unsubscribe = db.collection("comments")
-            .where("book", "==", BibleData.verses[0].book_name)
-            .where("chapter", "==", BibleData.verses[0].chapter)
-            .where("UUID", "in", VIPs)
-            .orderBy("verse")
-            .orderBy("post_date", "desc")
-            .limit(15)
-            .onSnapshot((querySnapshot) => {
-                let comments = []
-                querySnapshot.forEach((doc) => {
-                    // doc.data() is never undefined for query doc snapshots
-                    let item = doc.data()
-                    item.id = doc.id
-                    comments.push(item);
-                })
-                loadComments(comments)
-            }, (error) => {
-                console.log(error)
-                setAlert("An error has occurred, please try reloading the page.")
-            })
-            
-            return unsubscribe
-        }
-        
-        }
-    const getBookmarks = () =>{
-        const unsubscribe = 
-        db.collection('bookmarks')
-        .where('UUID', '==', auth.currentUser.uid)
-        .where("book", "==", BibleData.verses[0].book_name)
-        .where("chapter", "==", BibleData.verses[0].chapter)
-        .onSnapshot((querySnapshot) => {
-            let comments = []
-            querySnapshot.forEach((doc) => {                
-                comments.push(doc.data());
-            })
-            setBookmarkState(comments.length)
-        }, (error) => {
-            console.log(error)
-            setAlert("An error has occurred, please try reloading the page.")
-        })
-        return unsubscribe
-}
+
     const addBookmark = () =>{
         db.collection("bookmarks").doc(auth.currentUser.uid+BibleData.verses[0].book_name+BibleData.verses[0].chapter).set({
             book: BibleData.verses[0].book_name,
@@ -137,7 +63,6 @@ export default function Bible(props) {
         .doc(auth.currentUser.uid+BibleData.verses[0].book_name+BibleData.verses[0].chapter)
         .delete()
         .then(()=>{
-            console.log('Document Deleted')
         })
     }
 
@@ -148,6 +73,80 @@ export default function Bible(props) {
     })
 
     useEffect(() => {
+        const getUserComments = () =>{
+            const unsubscribe = db.collection("comments")
+                .where("book", "==", BibleData.verses[0].book_name)
+                .where("chapter", "==", BibleData.verses[0].chapter)
+                .where("UUID", "==", auth.currentUser.uid)
+                .orderBy("verse")
+                .orderBy("post_date", "desc")
+                .limit(100)
+                .onSnapshot((querySnapshot) => {
+                    let comments = []
+                    querySnapshot.forEach((doc) => {
+                        // doc.data() is never undefined for query doc snapshots
+                        let item = doc.data()
+                        item.id = doc.id
+                        comments.push(item);
+                    })
+                    loadUserComments(comments)
+                }, (error) => {
+                    console.log(error)
+                    setAlert("An error has occurred, please try reloading the page.")
+                })
+                
+                return unsubscribe
+            }
+      
+            
+        const getComments = () =>{
+            
+            const VIPs = user.VIP.map((item)=> item.id)
+            
+            if (VIPs.length > 0) {
+                const unsubscribe = db.collection("comments")
+                .where("book", "==", BibleData.verses[0].book_name)
+                .where("chapter", "==", BibleData.verses[0].chapter)
+                .where("UUID", "in", VIPs)
+                .orderBy("verse")
+                .orderBy("post_date", "desc")
+                .limit(15)
+                .onSnapshot((querySnapshot) => {
+                    let comments = []
+                    querySnapshot.forEach((doc) => {
+                        // doc.data() is never undefined for query doc snapshots
+                        let item = doc.data()
+                        item.id = doc.id
+                        comments.push(item);
+                    })
+                    loadComments(comments)
+                }, (error) => {
+                    console.log(error)
+                    setAlert("An error has occurred, please try reloading the page.")
+                })
+                
+                return unsubscribe
+            }
+            
+            }
+        const getBookmarks = () =>{
+            const unsubscribe = 
+            db.collection('bookmarks')
+            .where('UUID', '==', auth.currentUser.uid)
+            .where("book", "==", BibleData.verses[0].book_name)
+            .where("chapter", "==", BibleData.verses[0].chapter)
+            .onSnapshot((querySnapshot) => {
+                let comments = []
+                querySnapshot.forEach((doc) => {                
+                    comments.push(doc.data());
+                })
+                setBookmarkState(comments.length)
+            }, (error) => {
+                console.log(error)
+                setAlert("An error has occurred, please try reloading the page.")
+            })
+            return unsubscribe
+    }
         if(BibleData){
         let Unsubscribe = getComments()
         let UnsubscribeUser = getUserComments()
@@ -161,6 +160,7 @@ export default function Bible(props) {
             UnsubscribeBookmarks();
         }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [BibleData])
 
 
@@ -235,17 +235,17 @@ export default function Bible(props) {
             <div className="Biblemain">
                 <h1 className = 'mbottom h3 Bibletitle'>
                     <div>
-                {BibleData.reference !="Genesis 1" && <IconButton aria-label="Go to Previous Chapter" onClick ={handlePreviousClick}><ArrowBackIosIcon /></IconButton>}
+                {BibleData.reference !=="Genesis 1" && <IconButton aria-label="Go to Previous Chapter" onClick ={handlePreviousClick}><ArrowBackIosIcon /></IconButton>}
                 </div>
                 <div className="reference">
                 {BibleData.reference}
                 </div>
                 <div>
-                {BibleData.reference !="Revelation 22" && <IconButton aria-label="Go to Next Chapter" onClick ={handleNextClick}><ArrowForwardIosIcon>Go to next chapter</ArrowForwardIosIcon></IconButton>}
+                {BibleData.reference !=="Revelation 22" && <IconButton aria-label="Go to Next Chapter" onClick ={handleNextClick}><ArrowForwardIosIcon>Go to next chapter</ArrowForwardIosIcon></IconButton>}
                 </div>
                 </h1>
                 <div className="reader">
-                { BibleData.verses.map((item)=><p style = {{fontSize: `${settings.fontsize}px`}} className = {settings.font}><span className = {"verse" + (item.verse == commentState.verse? ' verse-active': '')} key={`${item.book_id}${item.chapter}${item.verse}`} onClick = { (e) =>{toggleDrawer(e); verseClick(item.verse)}}><sup>{item.verse} </sup>{item.text}</span></p>)}
+                { BibleData.verses.map((item)=><p style = {{fontSize: `${settings.fontsize}px`}} className = {settings.font}><span className = {"verse" + (item.verse === commentState.verse? ' verse-active': '')} key={`${item.book_id}${item.chapter}${item.verse}`} onClick = { (e) =>{toggleDrawer(e); verseClick(item.verse)}}><sup>{item.verse} </sup>{item.text}</span></p>)}
                 </div>
                 <small>{BibleData.translation_name}</small>
                 </div>

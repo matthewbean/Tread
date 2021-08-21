@@ -6,11 +6,11 @@ import Button from '../Button';
 import firebase from '../../firebase';
 import IconButton from '@material-ui/core/IconButton'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import Logo from '../../icons/Logo.svg'
+
 
 
 const auth = firebase.auth();
-const db = firebase.firestore();
+
 export default function Toolbar(props) {
     const [state, setstate] = useState({
         search: ""
@@ -45,8 +45,9 @@ export default function Toolbar(props) {
         return () => {
             unsubscribe()
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-    const shown = false;
+    
     const logout = ()=>{
         auth.signOut()
         setLoggedIn(false)

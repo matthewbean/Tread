@@ -1,5 +1,5 @@
 import { SET_ALERT, REMOVE_ALERT, CLEAR_ALERTS } from '../types'
-
+// eslint-disable-next-line
 export default (state, action) =>{
     switch(action.type){
         case SET_ALERT:

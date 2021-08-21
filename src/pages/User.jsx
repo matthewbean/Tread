@@ -20,7 +20,7 @@ const auth = firebase.auth();
 export default function User({ match }) {
     const { params } = match
     const applicationContext = useContext(ApplicationContext);
-    const { loadFeed, feed, user, loading, setLoading } = applicationContext;
+    const { loadUserFeed, feed, user, loading, setLoading } = applicationContext;
     const settingsContext = useContext(SettingsContext)
     const{ settings } = settingsContext;
 
@@ -36,31 +36,8 @@ export default function User({ match }) {
     
     
 
-    const getUserData = ()=>{
-        setLoading( true)
-        db.collection('users')
-        .doc(params.id)
-        .get()
-        .then((item)=>{
-            setstate({...state, userDetails: item.data()})
-            loadFeed(item.id)
- 
-        })
-        .catch((err)=>{
-            console.log(err)
-        }) 
-    }
-    const getFollowed = ()=>{
-        let unsubscribe = db.collection('users')
-        .doc(auth.currentUser.uid)
-        .collection('follows')
-        .doc(params.id)
-        .onSnapshot((snapshot)=>{
-           setfollowedstate(snapshot.exists)
-        })
-        
-        return unsubscribe;
-    }
+    
+    
 
 
     const removeFollow = ()=>{
@@ -75,7 +52,7 @@ export default function User({ match }) {
             console.error("Error updating document: ", error);
         });
         db.collection('users').doc(auth.currentUser.uid).update({
-            VIP: user.VIP.filter((item)=> item.id != params.id)
+            VIP: user.VIP.filter((item)=> item.id !== params.id)
         })
 
     } 
@@ -106,15 +83,41 @@ export default function User({ match }) {
 
     useEffect(() => {
         // side effects
+        const getUserData = ()=>{
+            setLoading( true)
+            db.collection('users')
+            .doc(params.id)
+            .get()
+            .then((item)=>{
+                setstate({...state, userDetails: item.data()})
+                loadUserFeed(item.id)
+     
+            })
+            .catch((err)=>{
+                console.log(err)
+            }) 
+        }
+        const getFollowed = ()=>{
+            let unsubscribe = db.collection('users')
+            .doc(auth.currentUser.uid)
+            .collection('follows')
+            .doc(params.id)
+            .onSnapshot((snapshot)=>{
+               setfollowedstate(snapshot.exists)
+            })
+            
+            return unsubscribe;
+        }
         getUserData()
         const unsubscribe = getFollowed()
-
   
         // cleanup
         return () => {
             unsubscribe()
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [params.id])
+    
     if (loading) {
         return <Loading />
     }
@@ -135,7 +138,7 @@ export default function User({ match }) {
                 
                 <section className="VIP-section">
                 <h2 className="h3">Favorites:</h2>
-                    {userDetails && userDetails.VIP.map((item)=> <Vip name = {item.name} photoURL = {item.photoURL} UUID = {item.id} />)}                    
+                    {userDetails && userDetails.VIP.map((item)=> <Vip key={item.UUID} name = {item.name} photoURL = {item.photoURL} UUID = {item.id} />)}                    
                 </section>
             
              
@@ -144,7 +147,7 @@ export default function User({ match }) {
         </div>
             {feed &&
             <section className="main">
-                {feed && feed.map((item)=><FeedComment translation ={item.translation} chapter ={item.chapter} photoURL = {item.photoURL} book = {item.book} passage ={item.passage} verse= {item.verse} user = {item.handle} date = {item.post_date} text = {item.text} />)}
+                {feed && feed.map((item)=><FeedComment key = {item.id} recentReplies = {item.recent_replies}  translation ={item.translation} chapter ={item.chapter} photoURL = {item.photoURL} book = {item.book} passage ={item.passage} verse= {item.verse} user = {item.handle} date = {item.post_date} text = {item.text} />)}
             </section>}
     </div>
     )

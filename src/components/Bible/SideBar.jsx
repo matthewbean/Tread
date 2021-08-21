@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import ApplicationContext from '../../context/application/applicationContext'
 import AlertContext from '../../context/alert/alertContext'
 import Comment from './Comment';
@@ -13,7 +13,7 @@ export default function Sidebar({ darkmode, clearFields, handleChange, state, to
     const { comments, userComments, BibleData, submitComment } = applicationContext
     const { comment, verse, edit } = state;
     const alertContext = useContext(AlertContext)
-    const { setAlert, clearAlerts } = alertContext;
+    const { setAlert } = alertContext;
     
 
     const auth =firebase.auth();
@@ -34,7 +34,7 @@ export default function Sidebar({ darkmode, clearFields, handleChange, state, to
     
     const onSubmit = (e)=>{
         e.preventDefault()
-        if(comment != "" && verse > 0 && verse <= BibleData.verses.length){
+        if(comment !== "" && verse > 0 && verse <= BibleData.verses.length){
         submitComment(BibleData.translation_id, BibleData.verses[verse-1].text, comment, BibleData.verses[0].book_name, BibleData.verses[0].chapter, verse, displayName, uid, photoURL)
         clearFields()
     }else{
@@ -84,7 +84,7 @@ export default function Sidebar({ darkmode, clearFields, handleChange, state, to
                 {transitions && transitions.map(({ item, props, key }) =><animated.div key={key} style={props}><Comment recentReplies = {item.recent_replies} currentUser ={auth.currentUser} owned ={true} edit ={edit} id ={item.id} deleteComment ={deleteComment} replies ={item.replies} currentVerse = {verse} photoURL = {item.photoURL} verse= {item.verse} user = {item.handle} date = {item.post_date} text = {item.text} /></animated.div>)}
             </div>
             <h3 className = 'h5 mbottom'>Other's Comments:</h3>
-            {comments && comments.map((item)=><Comment id = {item.id} recentReplies = {item.recent_replies} owned ={false} photoURL = {item.photoURL} currentUser ={auth.currentUser} verse= {item.verse} user = {item.handle} date = {item.post_date} text = {item.text} />)}
+            {comments && comments.map((item)=><Comment key={item.id} id = {item.id} recentReplies = {item.recent_replies} owned ={false} photoURL = {item.photoURL} currentUser ={auth.currentUser} verse= {item.verse} user = {item.handle} date = {item.post_date} text = {item.text} />)}
             </div>
         </div>
     )

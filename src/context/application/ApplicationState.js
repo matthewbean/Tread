@@ -1,9 +1,8 @@
-import React, { useContext, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import axios from 'axios';
 import firebase from '../../firebase';
 import applicationReducer from './ApplicationReducer';
 import ApplicationContext from './applicationContext';
-import AlertContext from '../alert/alertContext';
 import {
     SELECT_BOOK,
     LOAD_CHAPTER,
@@ -134,7 +133,50 @@ const initialState = {
     }
     //Load posts
     const loadFeed =  (id) =>{ 
+        let array = [...id]
+        
+        var currentIndex = array.length,  randomIndex;
+
+        // While there remain elements to shuffle...
+        while (0 !== currentIndex) {
+      
+          // Pick a remaining element...
+          randomIndex = Math.floor(Math.random() * currentIndex);
+          currentIndex--;
+      
+          // And swap it with the current element.
+          [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex], array[currentIndex]];
+        }
+        
+
+
+      let searchArray = array.slice(0, 10)
     try{
+        
+        db.collection("comments")
+        .where("UUID", 'in', searchArray)
+        .limit('20')
+        .get()
+        .then((querySnapshot) => {
+            let feed = []
+            querySnapshot.forEach((doc) => {
+                // doc.data() is never undefined for query doc snapshots
+                feed.push(doc.data());
+            });
+           dispatch({type: LOAD_FEED, payload: feed})
+        })
+        .catch((error) => {
+            console.log("Error getting documents: ", error);
+        });
+    }
+    catch(err){
+        console.log(err)
+    }
+
+}
+    const loadUserFeed = (id) =>{
+            try{
         db.collection("comments")
         .where('UUID', '==', id)
         .orderBy("post_date", "desc")
@@ -155,7 +197,7 @@ const initialState = {
     catch(err){
         console.log(err)
     }
-}
+    }
     //Load comments
     const loadComments =  (comments) =>{ 
                dispatch({type: LOAD_COMMENTS, payload: comments})
@@ -209,7 +251,7 @@ const initialState = {
     const addVIP = (VIP)=>{
         let duplicate =true;
         state.VIP.forEach((item)=>{
-            if( item.UUID == VIP.UUID){
+            if( item.UUID === VIP.UUID){
                 duplicate = false;
             }
         })
@@ -223,7 +265,6 @@ const initialState = {
     }
     //submit VIP
     const submitVIP = () =>{
-        console.log(state.VIP)
         db.collection("users").doc(auth.currentUser.uid).update({
             VIP: state.VIP
         })
@@ -248,6 +289,7 @@ const initialState = {
             VIP: state.VIP,
             user: state.user,
             loadChapter,
+            loadUserFeed,
             clearBibleData,
             selectBook,
             loadFeed,

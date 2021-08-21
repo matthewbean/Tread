@@ -76,7 +76,10 @@ h5 {font-size: 1.25rem;}
 .p  {font-size: 1rem}
 
 small, .text-small {font-size: 0.8rem;}
-
+.container{
+  
+  margin: 5rem 3rem;
+}
 
 button, .button {
   position: relative;
@@ -412,7 +415,7 @@ border: none;
     "photo user user user date date"
     "photo comment comment comment comment edit" 
     
-    " icons icons . .verse verse";
+    " load-more load-more load-more . verse verse";
 }
 .reply{
   
@@ -501,6 +504,11 @@ border: none;
   grid-area: user;
   margin-top: -5px;
 
+}
+.comment .load-more{
+  grid-area: load-more;
+  width: 144px;
+  padding: 0;
 }
 .comment .edit{
   grid-area: edit;
@@ -822,8 +830,11 @@ height: 150px;
   justify-content: center;
   align-items: center;
 }
+.selected, .notselected{
+  padding: 1rem;
+}
 .follow{
-  width: 10rem;
+  width: 5rem;
   background: var(--secondary);
   border: 1px var(--outline) solid;
   margin-right: .625rem;
@@ -990,6 +1001,9 @@ position: relative;
   .Biblemain{
     margin-right: 0;
   }
+  .dashboard-other{
+
+  }
   .main{
     margin: 4rem 0 0 0;
     padding-left: 0px;
@@ -1003,6 +1017,8 @@ position: relative;
     position: static;
     height: auto;
     align-items: flex-start;
+    width: calc(100% - 2rem);
+    margin: -7px 10rem 1rem 1rem;
   }
   .dashboard-other .VIP-section{
     display: none

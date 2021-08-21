@@ -1,11 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 
-import Button from './Button'
-import trash from '../icons/trash-2.svg'
-import bookmark from '../icons/bookmark.svg'
-import IconButton from '@material-ui/core/IconButton'
+
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 
 

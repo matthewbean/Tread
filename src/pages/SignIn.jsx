@@ -1,7 +1,6 @@
 import React from 'react'
 
-import { Link, useHistory }  from 'react-router-dom';
-import Container from '@material-ui/core/Container';
+import {  useHistory }  from 'react-router-dom';
 
 
 import firebase from '../firebase';

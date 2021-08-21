@@ -20,14 +20,11 @@ import Vip from '../components/VIP';
 
 import{useAuthState } from 'react-firebase-hooks/auth';
 import ApplicationContext from '../context/application/applicationContext';
-import SettingsContext from '../context/settings/settingsContext';
 const auth = firebase.auth()
 export default function Dashboard({ alwaysHide }) {
-    const settingsContext = useContext(SettingsContext)
-    const{ settings } = settingsContext;
 
     const applicationContext = useContext(ApplicationContext)
-    const {  loadFeed, feed, user, loading, setLoading } = applicationContext
+    const {  user } = applicationContext
     const [userDetails] = useAuthState(auth)
     
 
@@ -63,7 +60,7 @@ export default function Dashboard({ alwaysHide }) {
                     </ul>
                     <h2 className="h4 mtop">Favorites:</h2>
                     <section className="VIP-section">
-                        {user && user.VIP && user.VIP.map((item)=> <Vip name = {item.name} photoURL = {item.photoURL} UUID = {item.id} />)}                    
+                        {user && user.VIP && user.VIP.map((item)=> <Vip key={item.UUID} name = {item.name} photoURL = {item.photoURL} UUID = {item.id} />)}                    
                     </section>
                 
             </div>
@@ -90,7 +87,7 @@ export default function Dashboard({ alwaysHide }) {
                     </ul>
                     <h2 className="h4 mtop">Favorites:</h2>
                     <section className="VIP-section">
-                    {user && user.VIP && user.VIP.map((item)=> <Vip name = {item.name} photoURL = {item.photoURL} UUID = {item.id} />)}                    
+                    {user && user.VIP && user.VIP.map((item)=> <Vip key={item.UUID} name = {item.name} photoURL = {item.photoURL} UUID = {item.id} />)}                    
                     </section>
                 
             </div>
@@ -111,7 +108,7 @@ export default function Dashboard({ alwaysHide }) {
                     </ul>
                     <h2 className="h4 mtop">Favorites:</h2>
                     <section className="VIP-section">
-                        {user && user.VIP && user.VIP.map((item)=> <Vip name = {item.name} photoURL = {item.photoURL} UUID = {item.id} />)}                    
+                        {user && user.VIP && user.VIP.map((item)=> <Vip key={item.UUID} name = {item.name} photoURL = {item.photoURL} UUID = {item.id} />)}                    
                     </section>
                 
             </div>

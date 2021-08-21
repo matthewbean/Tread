@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom'
-import firebase from '../firebase'
+
 import SettingsContext from '../context/settings/settingsContext';
 import Dashboard from '../components/Dashboard';
 import Button from '@material-ui/core/Button';
@@ -8,12 +8,11 @@ import Button from '@material-ui/core/Button';
 
 export default function Settings(props) {
     const settingsContext = useContext(SettingsContext);
-    const { settings, setSettings } = settingsContext
+    const { setSettings } = settingsContext
     
     const history = useHistory();
     
-    const auth = firebase.auth()
-    const db = firebase.firestore()
+
 
     const [state, setstate] = useState(settingsContext.settings)
 
@@ -34,8 +33,8 @@ export default function Settings(props) {
         <>
         <Dashboard />
         <section className="main">
-            <h1 className='h3'>Settings</h1>
                 <form onSubmit = {(e)=>onSubmit(e)} className="container">
+                <h1 className='h3'>Settings</h1>
                 <div className="toggle">
                     <label htmlFor="darkmode">Dark Mode: </label>
                     <label className="switch"  >

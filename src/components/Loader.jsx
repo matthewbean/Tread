@@ -6,24 +6,13 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 export default function Loader(props) {
     const applicationContext = useContext(ApplicationContext)
-    const{ loggedIn, setLoggedIn, setUser } = applicationContext;
+    const{ loggedIn, setUser } = applicationContext;
 
     const settingsContext = useContext(SettingsContext)
     const{ settings, setSettings } = settingsContext;
 
 
-    const loadUser = ()=>{
-        
-        const unsubscribe = db.collection('users')
-        .doc(auth.currentUser.uid)
-        .onSnapshot((querySnapshot) => {
-            setUser(querySnapshot.data())
-        }, (error) => {
-            console.log(error)
-            console.log("An error has occurred, please try reloading the page.")
-        })
-        return unsubscribe;
-    }
+
     useEffect(() => {
         let root=document.documentElement
         
@@ -40,12 +29,24 @@ export default function Loader(props) {
     useEffect(()=>{
         const localsettings = localStorage.getItem('settings')
 if (localsettings) {
-    console.log(JSON.parse(localsettings))
     setSettings(JSON.parse(localsettings))
 }
+// eslint-disable-next-line
     }, [])
     useEffect(() => {
         // side effects
+        const loadUser = ()=>{
+        
+            const unsubscribe = db.collection('users')
+            .doc(auth.currentUser.uid)
+            .onSnapshot((querySnapshot) => {
+                setUser(querySnapshot.data())
+            }, (error) => {
+                console.log(error)
+                console.log("An error has occurred, please try reloading the page.")
+            })
+            return unsubscribe;
+        }
         let unsubscribe = null;
         if (loggedIn === true) {
             unsubscribe = loadUser()
@@ -57,6 +58,7 @@ if (localsettings) {
             unsubscribe();
             }
         }
+        // eslint-disable-next-line
     }, [loggedIn])
 
     return (

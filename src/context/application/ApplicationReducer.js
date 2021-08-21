@@ -16,7 +16,7 @@ import { SELECT_BOOK,
     
 
 
-
+// eslint-disable-next-line
 export default(state, action)=>{
     switch(action.type){
         case SELECT_BOOK:
@@ -85,7 +85,7 @@ export default(state, action)=>{
         case REMOVE_VIP:
             return({
                 ...state,
-                VIP: state.VIP.filter((item)=>item.UUID != action.payload)
+                VIP: state.VIP.filter((item)=>item.UUID !== action.payload)
             })
         case ADD_VIP:
             return({

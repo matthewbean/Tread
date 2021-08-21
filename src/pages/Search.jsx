@@ -8,15 +8,15 @@ import Dashboard from '../components/Dashboard';
 export default function Search({ match }) {
     const { params } = match
     const applicationContext = useContext(ApplicationContext)
-    const { loading, setLoading } = applicationContext;
+    const { loading } = applicationContext;
     const [state, setstate] = useState({
         results: null
     })
     const { results } = state;
 
-    const db = firebase.firestore();
     useEffect(() => {
-        setLoading( true)
+        const db = firebase.firestore();
+        applicationContext.setLoading( true)
         db.collection('users')
         .where('search', '>=', params.id.toLowerCase()).where('search', '<=', params.id.toLowerCase() + '\uf8ff')
         .get()
@@ -27,14 +27,14 @@ export default function Search({ match }) {
                 let item = doc.data()
                 item.id = doc.id
                 users.push(item);
-                setLoading( false)
+                applicationContext.setLoading( false)
             })
             setstate({...state, results: users})
         }, (error) => {
             console.log(error)
-            // setAlert("An error has occurred, please try reloading the page.")
+            
         })
-        
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [params.id])
 
     return (

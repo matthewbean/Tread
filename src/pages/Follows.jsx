@@ -4,7 +4,7 @@ import ApplicationContext from '../context/application/applicationContext';
 import firebase  from '../firebase';
 
 import Follow from "../components/Follow";
-import { Redirect } from 'react-router';
+
 import Dashboard from '../components/Dashboard';
 export default function Follows(props) {
     const applicationContext = useContext(ApplicationContext);
@@ -23,10 +23,9 @@ export default function Follows(props) {
         
         if (state) {
             e.preventDefault()
-            console.log( false)
             let duplicate =true;
             user.VIP.forEach((item)=>{
-                if( item.id == newVIP.id){
+                if( item.id === newVIP.id){
                     duplicate = false;
                 }
             })
@@ -44,60 +43,62 @@ export default function Follows(props) {
         if (state) {
            e.preventDefault()
            db.collection('users').doc(auth.currentUser.uid).update({
-            VIP: user.VIP.filter((item)=> item.id != VIP)
+            VIP: user.VIP.filter((item)=> item.id !== VIP)
         })
         } 
     }
 
-    const loadFollows = () =>{
-        let allfollows = [];
-    db.collection('users').doc(auth.currentUser.uid).collection('follows').get()
-    .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => { 
-            let item = doc.data()          
-            item.id = doc.id
-            allfollows.push(item);
-        })
-        setFollows(allfollows)
-    }, (error) => {
-        console.log(error)
-        setAlert("An error has occurred, please try reloading the page.")
-    })
-   
-}
+
 
 
     useEffect(() => {
+        const loadFollows = () =>{
+            let allfollows = [];
+        db.collection('users').doc(auth.currentUser.uid).collection('follows').get()
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => { 
+                let item = doc.data()          
+                item.id = doc.id
+                allfollows.push(item);
+            })
+            setFollows(allfollows)
+        }, (error) => {
+            console.log(error)
+            setAlert("An error has occurred, please try reloading the page.")
+        })
+       
+    }
         loadFollows();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     
 
     return (
-        <>
+        <div className="container">
         <Dashboard />
         <section className="main">
         <h1 className ='h3'>Follows</h1>
         <div className="toggle">
             <label htmlFor="edit-VIP">Edit Favorites list: </label>
-            <label class="switch"  >
+            <label className="switch"  >
                 <input name ='edit-VIP' value={state} onClick={(e) =>handleChange(e)}  type="checkbox" />
-                <span class="slider round"></span>
+                <span className="slider round"></span>
             </label>
         </div>
 
         <div className = "follows">
+        <h2 className ='h4'>Favorites List:</h2>
             <div className="selected">
-                <h2 className ='h4'>Favorites List:</h2>
-                {user && user.VIP && user.VIP.map((item)=> <Follow handleClick = {(e) =>removeVIP( e, item.id)}  name ={item.name} photoURL = {item.photoURL} UUID = {item.id}></Follow>) }
+                {user && user.VIP && user.VIP.map((item)=> <Follow key={item.id} handleClick = {(e) =>removeVIP( e, item.id)}  name ={item.name} photoURL = {item.photoURL} UUID = {item.id}></Follow>) }
             </div>
+            <h2 className ='h4'>Full Follow List:</h2>
             <div className="notselected">
-                <h2 className ='h4'>Full Follow List:</h2>
-                {follows &&  follows.map((item)=><Follow item = {item} handleClick = {(e) =>addVIP(e, item)} name ={item.name} photoURL = {item.photoURL} UUID = {item.id} />)}
+                {follows &&  follows.map((item)=><Follow key={item.id} item = {item} handleClick = {(e) =>addVIP(e, item)} name ={item.name} photoURL = {item.photoURL} UUID = {item.id} />)}
             </div>
             
         </div>
         </section>
 
-        </>
+        </div>
     )
 }
