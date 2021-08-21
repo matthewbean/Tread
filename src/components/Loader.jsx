@@ -28,8 +28,13 @@ export default function Loader(props) {
     }, [settings])
     useEffect(()=>{
         const localsettings = localStorage.getItem('settings')
+
 if (localsettings) {
+
     setSettings(JSON.parse(localsettings))
+}else{
+    localStorage.setItem('settings', '{"darkmode":true,"font":"\'Poppins\', sans-serif","fontsize":16}')
+    setSettings(JSON.parse('{"darkmode":true,"font":"\'Poppins\', sans-serif","fontsize":16}'))
 }
 // eslint-disable-next-line
     }, [])

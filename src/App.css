@@ -1010,6 +1010,29 @@ position: relative;
   }
 }
 @media screen and (max-width: 959px) {
+  .about-main h2{
+    margin-top: 2rem;
+    padding: 0 10px;
+  }
+  .about-main p{
+    padding: 0 10px;
+  }
+  .backgroundimg{
+    padding: 3rem;
+    width: 90%;
+    
+    position: static;
+    }
+  .first-section .MuiContainer-root:last-child{
+    margin-bottom: 0;
+}
+.first-section .MuiContainer-root:first-child{
+  margin-bottom: 0;
+  margin-top: 0;
+}
+.second-section .MuiContainer-root:first-child{
+  margin-bottom: 0;
+}
   .Biblemain{
     margin-right: 0;
   }
