@@ -80,7 +80,7 @@ export default function Signin(props) {
     return (
 
         <div className = "sign-in">
-        <h1>Bible With Friends</h1>
+        <h1 className='white'>Bible With Friends</h1>
         <p>Please sign-in:</p>
         <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth}/>
       </div>

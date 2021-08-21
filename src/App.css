@@ -14,9 +14,16 @@
   --scroll-bar: #444;
   --scroll-track: #727272;
 }
+.white{
+  color: #fff !important;
+}
 
 .filter-button{
   color: black;
+
+}
+.filter-button img{
+  filter: brightness(0);
 }
 
 *{
@@ -482,9 +489,14 @@ border: none;
 
   
 }
+.reply-field .form__label{
+  margin-left: .5rem;
+}
 .reply-field .replyText{
   margin: 0;
-  padding: 0;
+  margin-left: .5rem;
+  padding: .5rem;
+  padding-left: 0;
   height: 4rem;
   color: var(--text);
   font-family: 'Poppins', sans-serif;
