@@ -70,7 +70,7 @@ export default function Toolbar(props) {
                 
                 </li>):(<>
                 <li className = "justify-left">
-                    <h1 className = 'h4 white'>Bible With Friends</h1>
+                    <h1 className = 'h4 white'>Tread</h1>
                 </li>
                 <li className="link"><Link to='/about'>About</Link></li>
                 <li className="link"><Link className = ' button login' to='/'>Login</Link></li>
