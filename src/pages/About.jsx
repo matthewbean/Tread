@@ -20,8 +20,8 @@ export default function About(props) {
         <Grid container spacing={3}>
 
         <Grid item xs={12}>
-        <h2>Welcome to Bible With Friends</h2>
-        <p>Bible With Friends is a brand-new social media platform that allows you to network with fellow believers across the world.
+        <h2>Welcome to Tread</h2>
+        <p>Tread is a brand-new social media platform that allows you to network with fellow believers across the world.
           Experience the word in a new way, together. Get started in four easy steps.
         </p>
         </Grid>
@@ -139,7 +139,7 @@ export default function About(props) {
       <footer>
       <Container>
         <div className='white'>
-        BiblewithFriends&copy;
+        Tread&copy;
         </div>
         <div>
           <ul>
