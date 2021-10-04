@@ -2,6 +2,7 @@ import { SELECT_BOOK,
     LOAD_CHAPTER,
     CLEAR_BIBLE_DATA,
     LOAD_FEED,
+    CLEAR_FEED,
     LOAD_COMMENTS, 
     SELECT_CHAPTER,
     LOADING_TRUE,
@@ -46,6 +47,12 @@ export default(state, action)=>{
                 ...state,
                 feed: action.payload,
                 loading: false
+            })
+        case CLEAR_FEED:
+            return({
+                ...state,
+                feed: null,
+                user: 'unknown'
             })
         case LOAD_COMMENTS: 
             return({

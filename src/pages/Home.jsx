@@ -16,12 +16,9 @@ export default function Home() {
     
 
     const applicationContext = useContext(ApplicationContext)
-    const {  loadFeed, feed, user, loading, setLoading } = applicationContext
-    
-
+    const {  loadFeed, feed, user, loading, setLoading, clearFeed } = applicationContext
     
     useEffect(() => {
-        
         setLoading( true)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -33,7 +30,11 @@ export default function Home() {
             }
             
         }
-        grabFeed(user.feed_follows)
+        if (!user.feed_follows || user.feed_follows.length<=0){
+            setLoading(false)
+        } else {
+            grabFeed(user.feed_follows)
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user])
     

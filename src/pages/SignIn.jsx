@@ -36,6 +36,7 @@ export default function Signin(props) {
             name: displayName,
             photoURL: photoURL || "https://firebasestorage.googleapis.com/v0/b/biblewithfriends-a6ea4.appspot.com/o/profle%20image.png?alt=media&token=0738c27f-153c-45e5-8d6b-57b066426b19",
             VIP: [],
+            feed_follows:[],
             followers: 0,
             search: displayName.toLowerCase()
         })
@@ -65,7 +66,7 @@ export default function Signin(props) {
         },
         
         
-      // We will display Google and Facebook as auth providers.
+      // We will display Google as providers.
       signInOptions: [
         firebase.auth.EmailAuthProvider.PROVIDER_ID,
         firebase.auth.GoogleAuthProvider.PROVIDER_ID

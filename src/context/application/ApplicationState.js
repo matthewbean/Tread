@@ -17,7 +17,8 @@ import {
     SET_FOLLOWS,
     ADD_VIP,
     REMOVE_VIP,
-    CLEAR_BIBLE_DATA
+    CLEAR_BIBLE_DATA,
+    CLEAR_FEED
 } from '../types'
 
 const website = 'https://bible-api.com/';
@@ -130,6 +131,10 @@ const initialState = {
     //clear Bible data
     const clearBibleData = ()=>{
         dispatch({type:CLEAR_BIBLE_DATA})
+    }
+    //clear feed
+    const clearFeed = ()=>{
+        dispatch({type:CLEAR_FEED})
     }
     //Load posts
     const loadFeed =  (id) =>{ 
@@ -293,6 +298,7 @@ const initialState = {
             clearBibleData,
             selectBook,
             loadFeed,
+            clearFeed,
             setUser,
             loadComments,
             loadUserComments,

@@ -18,7 +18,7 @@ export default function Toolbar(props) {
     
     const { search } = state;
     const applicationContext = useContext(ApplicationContext)
-    const{ loggedIn, setLoggedIn } = applicationContext;
+    const{ loggedIn, setLoggedIn, clearFeed } = applicationContext;
 
     const history = useHistory()
  
@@ -49,6 +49,7 @@ export default function Toolbar(props) {
     }, [])
     
     const logout = ()=>{
+        clearFeed()
         auth.signOut()
         setLoggedIn(false)
     }

@@ -3,6 +3,7 @@ export const LOAD_CHAPTER = "LOAD_CHAPTER";
 export const CLEAR_BIBLE_DATA = "CLEAR_BIBLE_DATA"
 
 export const LOAD_FEED = "LOAD_FEED";
+export const CLEAR_FEED = "CLEAR_FEED";
 export const LOAD_COMMENTS = "LOAD_COMMENTS";
 export const SELECT_CHAPTER = "SELECT_CHAPTER";
 export const LOADING_TRUE = "LOADING_TRUE";
