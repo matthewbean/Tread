@@ -1,6 +1,6 @@
 # Tread
 
-Introducing "Tread", a Bible study website that lets you connect with your friends and share your insights on Scripture. With Tread, you can share your thoughts and comments on individual verses. The app makes it easy to write and read comments, highlight important passages, and engage in discussions with your friends. Whether you're studying the Bible with a small group or just want to share your thoughts with friends, Tread is the perfect website for you. Start deepening your understanding of the Bible today with Tread.
+Introducing "Tread", a Bible study website that lets you connect with your friends and share your insights on Scripture. With Tread, you can share your thoughts and comments on individual verses. Tread makes it easy to write and read comments, highlight important passages, and engage in discussions with your friends. Whether you're studying the Bible with a small group or just want to share your thoughts with friends, Tread is the perfect website for you. Start deepening your understanding of the Bible today with Tread.
 
 ## Getting Started
 
